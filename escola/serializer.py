@@ -9,10 +9,9 @@ class AlunoSerializer(serializers.ModelSerializer):
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
-        field = ['id', 'codigo_cuso', 'descricao', 'nivel']
-
+        fields = ['id', 'codigo_curso', 'descricao', 'nivel']
 
 class MatriculaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Matricula
-        field = ['id', 'aluno', 'cuso', 'periodo']
+        fields = ['id', 'aluno', 'curso', 'periodo']
