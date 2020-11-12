@@ -1,6 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from escola.models import Aluno, Curso, Matricula
-from escola.serializer import AlunoSerializer, CursoSerializer, MatriculaSerializer
+from escola.serializer import AlunoSerializer, CursoSerializer, MatriculaSerializer, ListaMatriculasAlunoSerializer, ListaAlunosMatriculadosCursoSerializer
 
 from django.http import JsonResponse
 
@@ -18,3 +18,18 @@ class MatriculasViewSet(viewsets.ModelViewSet):
         """Exibindo todas as matriculas"""
         queryset = Matricula.objects.all()
         serializer_class = MatriculaSerializer
+
+class ListaMatriculasAlunoViewSet(generics.ListAPIView):
+    """Exibindo as matriculas de um aluno"""
+    def get_queryset(self):
+        queryset = Matricula.objects.filter(aluno_id=self.kwargs['pk'])
+        return queryset
+    serializer_class = ListaMatriculasAlunoSerializer
+
+
+class ListaAlunosMatriculadosCursoViewSet(generics.ListAPIView):
+    """Exibindo alunos matriculados em um curso"""
+    def get_queryset(self):
+        queryset = Matricula.objects.filter(curso_id=self.kwargs['pk'])
+        return queryset
+    serializer_class = ListaAlunosMatriculadosCursoSerializer
